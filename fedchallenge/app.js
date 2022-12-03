@@ -11341,27 +11341,30 @@ var $author$project$Main$view = function (model) {
 							_List_fromArray(
 								[
 									$mdgriffith$elm_ui$Element$width($mdgriffith$elm_ui$Element$fill),
-									$mdgriffith$elm_ui$Element$spacing(10),
 									$mdgriffith$elm_ui$Element$Border$rounded(20),
 									$mdgriffith$elm_ui$Element$Background$color(
 									A3($mdgriffith$elm_ui$Element$rgb255, 68, 204, 238)),
 									$mdgriffith$elm_ui$Element$inFront(
 									A2(
-										$mdgriffith$elm_ui$Element$image,
+										$mdgriffith$elm_ui$Element$el,
 										_List_fromArray(
 											[
-												$mdgriffith$elm_ui$Element$Border$rounded(10),
-												$mdgriffith$elm_ui$Element$padding(30)
+												$mdgriffith$elm_ui$Element$centerX,
+												$mdgriffith$elm_ui$Element$padding(50),
+												$mdgriffith$elm_ui$Element$Font$bold
 											]),
-										{description: 'Talenteca', src: '/logo.jpg'}))
+										$mdgriffith$elm_ui$Element$text(' Frontend Developer Challenge ')))
 								]),
 							_List_fromArray(
 								[
 									A2(
-									$mdgriffith$elm_ui$Element$el,
+									$mdgriffith$elm_ui$Element$image,
 									_List_fromArray(
-										[$mdgriffith$elm_ui$Element$centerX, $mdgriffith$elm_ui$Element$Font$bold]),
-									$mdgriffith$elm_ui$Element$text(' Frontend Developer Challenge '))
+										[
+											$mdgriffith$elm_ui$Element$Border$rounded(30),
+											$mdgriffith$elm_ui$Element$padding(10)
+										]),
+									{description: 'Talenteca', src: '/logo.jpg'})
 								]))
 						])),
 					A2(

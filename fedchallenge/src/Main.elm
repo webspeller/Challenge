@@ -47,17 +47,18 @@ view model =
             [ row [width fill
                     , Element.centerX] 
                     [   row   [ width fill
-                            , spacing 10
                             , Border.rounded 20
                             , Background.color (rgb255 68 204 238)
-                            , inFront <| image  [ Border.rounded 10
-                                                , padding 30
-                                                ]
+                            , inFront <| el [Element.centerX, padding 50, Font.bold] <| (text " Frontend Developer Challenge " )
+                            ]
+                            [ image [ Border.rounded 30
+                                    , padding 10 
+                                    ]
                                                 { src = "/logo.jpg"
                                                 , description = "Talenteca"
                                                 }
-                            ] [ el [Element.centerX, Font.bold] <| (text " Frontend Developer Challenge " )]
-                    
+                            --, el [Element.centerX, Font.bold] <| (text " Frontend Developer Challenge " )]
+                            ]
                     
                    
                     ]
