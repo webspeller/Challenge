@@ -107,7 +107,7 @@ view model =
                                     , toggleWidth = 60
                                     , toggleHeight = 28
                                     }
-                            , label = Input.labelAbove [] <| text " "
+                            , label = Input.labelHidden ""
                             , onChange = always Toggle
                             }
                     , el [ padding 10 ] (text "Search by Name and Phone")

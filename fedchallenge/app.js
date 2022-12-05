@@ -11253,12 +11253,10 @@ var $mdgriffith$elm_ui$Element$createNearby = F2(
 var $mdgriffith$elm_ui$Element$inFront = function (element) {
 	return A2($mdgriffith$elm_ui$Element$createNearby, $mdgriffith$elm_ui$Internal$Model$InFront, element);
 };
-var $mdgriffith$elm_ui$Element$Input$Above = {$: 'Above'};
-var $mdgriffith$elm_ui$Element$Input$Label = F3(
-	function (a, b, c) {
-		return {$: 'Label', a: a, b: b, c: c};
-	});
-var $mdgriffith$elm_ui$Element$Input$labelAbove = $mdgriffith$elm_ui$Element$Input$Label($mdgriffith$elm_ui$Element$Input$Above);
+var $mdgriffith$elm_ui$Element$Input$HiddenLabel = function (a) {
+	return {$: 'HiddenLabel', a: a};
+};
+var $mdgriffith$elm_ui$Element$Input$labelHidden = $mdgriffith$elm_ui$Element$Input$HiddenLabel;
 var $mdgriffith$elm_ui$Internal$Model$OnlyDynamic = F2(
 	function (a, b) {
 		return {$: 'OnlyDynamic', a: a, b: b};
@@ -11755,10 +11753,7 @@ var $author$project$Main$view = function (model) {
 											checked: model.toggle,
 											icon: $author$project$Main$toggleCheckboxWidget(
 												{offColor: $author$project$Main$deepSkyBlue, onColor: $author$project$Main$green, sliderColor: $author$project$Main$white, toggleHeight: 28, toggleWidth: 60}),
-											label: A2(
-												$mdgriffith$elm_ui$Element$Input$labelAbove,
-												_List_Nil,
-												$mdgriffith$elm_ui$Element$text(' ')),
+											label: $mdgriffith$elm_ui$Element$Input$labelHidden(''),
 											onChange: $elm$core$Basics$always($author$project$Main$Toggle)
 										})),
 									A2(
