@@ -1,6 +1,7 @@
 module Main exposing (..)
 
 import Browser
+import Dict exposing (Dict)
 import Element exposing (..)
 import Element.Background as Background
 import Element.Border as Border
@@ -9,6 +10,22 @@ import Element.Font as Font
 import Element.Input as Input exposing (Label)
 import Html exposing (Html)
 import Html.Attributes as HA exposing (class, style)
+import Http
+import Json.Decode as D exposing (Decoder, field, map2, string)
+
+
+
+---- PROGRAM ----
+
+
+main : Program () Model Msg
+main =
+    Browser.element
+        { init = init
+        , subscriptions = always Sub.none
+        , update = update
+        , view = view
+        }
 
 
 
@@ -16,14 +33,23 @@ import Html.Attributes as HA exposing (class, style)
 
 
 type alias Model =
-    { toggle : Bool }
+    { toggle : Bool, countries : Countries }
+
+
+type alias CountryDetails =
+    { country : String
+    , region : String
+    }
+
+
+type alias Countries =
+    Dict String CountryDetails
 
 
 init : () -> ( Model, Cmd Msg )
 init _ =
-    ( { toggle = False
-      }
-    , Cmd.none
+    ( { toggle = False, countries = Dict.empty }
+    , getRequestCountries
     )
 
 
@@ -34,6 +60,7 @@ init _ =
 type Msg
     = Toggle
     | NoOp
+    | GotRequestCountriesResponse (Result Http.Error Countries)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -45,8 +72,17 @@ update msg model =
         NoOp ->
             ( model, Cmd.none )
 
+        GotRequestCountriesResponse res ->
+            case res of
+                Ok countries ->
+                    ( { model | countries = countries }, Cmd.none )
+
+                Err error ->
+                    ( model, Cmd.none )
 
 
+
+-- we can add error handling here if you want to
 ---- VIEW ----
 
 
@@ -113,11 +149,12 @@ view model =
                     , el [ padding 10 ] (text "Search by Name and Phone")
                     ]
                 ]
+            , row [] (Dict.toList model.countries |> List.map (\( short, long ) -> text short))
             ]
 
 
 
----- Definition of Colors ----
+---- Definition of Colors for View ----
 
 
 deepSkyBlue : Color
@@ -188,14 +225,24 @@ toggleCheckboxWidget { offColor, onColor, sliderColor, toggleWidth, toggleHeight
 
 
 
----- PROGRAM ----
+--------- HTTP ----------
 
 
-main : Program () Model Msg
-main =
-    Browser.element
-        { init = init
-        , subscriptions = always Sub.none
-        , update = update
-        , view = view
+getRequestCountries : Cmd Msg
+getRequestCountries =
+    Http.get
+        { url = "https://api.first.org/data/v1/countries"
+        , expect = Http.expectJson GotRequestCountriesResponse decodeCountries
         }
+
+
+decodeCountries : D.Decoder Countries
+decodeCountries =
+    field "data" <| D.dict countryDetailsDecoder
+
+
+countryDetailsDecoder : D.Decoder CountryDetails
+countryDetailsDecoder =
+    map2 CountryDetails
+        (field "country" string)
+        (field "region" string)
