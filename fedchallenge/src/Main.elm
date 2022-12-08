@@ -149,7 +149,10 @@ view model =
                     , el [ padding 10 ] (text "Search by Name and Phone")
                     ]
                 ]
-            , row [] (Dict.toList model.countries |> List.map (\( short, long ) -> text short))
+            , column []
+                (Dict.toList model.countries
+                    |> List.map (\( short, { country, region } ) -> row [] [ text (short ++ ": " ++ country ++ "-" ++ region) ])
+                )
             ]
 
 
@@ -231,7 +234,7 @@ toggleCheckboxWidget { offColor, onColor, sliderColor, toggleWidth, toggleHeight
 getRequestCountries : Cmd Msg
 getRequestCountries =
     Http.get
-        { url = "https://api.first.org/data/v1/countries"
+        { url = "https://corsproxy.io/?https://api.first.org/data/v1/countries"
         , expect = Http.expectJson GotRequestCountriesResponse decodeCountries
         }
 
